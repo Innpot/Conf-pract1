@@ -1,0 +1,10 @@
+ls
+ls /
+ls "/home/student/docs/with spaces.txt"
+cd /home/student/docs
+cd ..
+cd /missing
+unknown
+ls "unterminated
+exit extra
+exit

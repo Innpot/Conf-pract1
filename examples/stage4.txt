@@ -1,0 +1,33 @@
+ls
+ls -a
+ls -l /home/student/docs
+ls -al /
+ls -- /motd
+ls /missing
+ls -z
+ls / /home
+cd /home/student/docs
+ls "with spaces.txt"
+cd ..
+cd ./docs
+cd /motd
+cd /missing
+cd a b
+cd
+date
+date "+%Y-%m-%d %H:%M"
+date invalid
+date a b
+cal
+cal 2026
+cal 2 2024
+cal 13 2026
+cal 0
+cal bad
+cal 1 2 3
+clear extra
+clear
+ls -al
+unknown
+ls "unterminated
+exit extra

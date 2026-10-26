@@ -1,0 +1,30 @@
+ls -al /home/student/docs
+chmod 600 /home/student/docs/notes.txt
+chmod u+x,g=r,o= /home/student/docs/notes.txt
+chmod -R a+r /home
+ls -l /home/student/docs
+chmod 999 /motd
+chmod bad /motd
+chmod 644 /missing
+chmod
+mv /home/student/docs/notes.txt "/home/student/docs/new notes.txt"
+mv "/home/student/docs/new notes.txt" /tmp
+ls -l /tmp
+cd /home/student/docs
+mv /home/student /home/renamed
+ls
+mv /home /home/renamed/docs
+mv / /tmp
+mv /missing /tmp
+mv /motd /absent/file
+mv /motd /motd
+mv /motd /home/renamed
+ls -al /home/renamed
+mv /home/renamed/motd /.hidden
+ls -al /
+chmod a-w /.hidden
+chmod 0755 /tmp
+ls -al /
+mv
+exit extra
+exit
