@@ -11,8 +11,8 @@ def check_count(args, minimum, maximum, usage):
         raise ValueError(f"usage: {usage}")
 
 
-def list_directory(shell, args):
-    """List one path, optionally including dotfiles and mode metadata."""
+def listing_arguments(args):
+    """Separate ls flags from its optional positional path."""
     flags = set()
     paths = []
     options = True
@@ -26,6 +26,12 @@ def list_directory(shell, args):
     if flags - {"a", "l"}:
         raise ValueError("ls: supported options are -a and -l")
     check_count(paths, 0, 1, "ls [-a] [-l] [--] [path]")
+    return flags, paths
+
+
+def list_directory(shell, args):
+    """List one path, optionally including dotfiles and mode metadata."""
+    flags, paths = listing_arguments(args)
     path = shell.vfs.resolve(paths[0] if paths else ".", shell.cwd)
     node = shell.vfs.node(path)
     entries = node.children if node.directory else {

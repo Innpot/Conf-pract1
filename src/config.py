@@ -28,3 +28,14 @@ def run_script(lines, shell, callback):
         if not shell.running:
             break
         callback(line)
+
+
+def validate_paths(args):
+    """Prevent the log or its temporary file from overwriting input."""
+    log = Path(args.log).resolve()
+    temporary = log.with_suffix(log.suffix + ".tmp")
+    inputs = [Path(args.vfs).resolve()]
+    if args.script:
+        inputs.append(Path(args.script).resolve())
+    if log in inputs or temporary in inputs:
+        raise ValueError("log paths must differ from VFS and script paths")

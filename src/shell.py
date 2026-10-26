@@ -3,6 +3,7 @@
 import shlex
 from src.vfs import VFS
 from src.commands import COMMANDS
+from src.mutations import MUTATIONS
 
 
 class Shell:
@@ -37,6 +38,7 @@ class Shell:
 
     def dispatch(self, command, args):
         """Dispatch a supported command to its implementation."""
-        if command not in COMMANDS:
+        handler = COMMANDS.get(command) or MUTATIONS.get(command)
+        if handler is None:
             raise ValueError(f"unknown command: {command}")
-        return COMMANDS[command](self, args)
+        return handler(self, args)

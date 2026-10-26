@@ -2,7 +2,6 @@
 
 import base64
 from dataclasses import dataclass, field
-import posixpath
 import re
 import xml.etree.ElementTree as ET
 
@@ -27,26 +26,38 @@ def parse_node(element):
         raise ValueError(f"invalid permission mode: {mode}")
     node = Node(directory, int(mode, 8))
     if directory:
-        for child in element:
-            name = child.get("name", "")
-            if not name or name in {".", ".."} or "/" in name:
-                raise ValueError(f"invalid VFS name: {name!r}")
-            if name in node.children:
-                raise ValueError(f"duplicate VFS name: {name}")
-            node.children[name] = parse_node(child)
+        node.children = parse_children(element)
     else:
-        if len(element):
-            raise ValueError("file cannot contain child elements")
-        encoding = element.get("encoding", "utf-8")
-        text = element.text or ""
-        if encoding == "base64":
-            node.data = base64.b64decode("".join(text.split()),
-                                        validate=True)
-        elif encoding == "utf-8":
-            node.data = text.encode("utf-8")
-        else:
-            raise ValueError(f"unsupported encoding: {encoding}")
+        node.data = parse_data(element)
     return node
+
+
+def parse_children(element):
+    """Read distinct, single-component child names."""
+    children = {}
+    for child in element:
+        name = child.get("name", "")
+        if not name or name in {".", ".."} or "/" in name:
+            raise ValueError(f"invalid VFS name: {name!r}")
+        if child.tag == "vfs":
+            raise ValueError("vfs is only allowed as the root element")
+        if name in children:
+            raise ValueError(f"duplicate VFS name: {name}")
+        children[name] = parse_node(child)
+    return children
+
+
+def parse_data(element):
+    """Decode text or strict base64 file content."""
+    if len(element):
+        raise ValueError("file cannot contain child elements")
+    encoding = element.get("encoding", "utf-8")
+    text = element.text or ""
+    if encoding == "base64":
+        return base64.b64decode("".join(text.split()), validate=True)
+    if encoding == "utf-8":
+        return text.encode("utf-8")
+    raise ValueError(f"unsupported encoding: {encoding}")
 
 
 class VFS:

@@ -2,7 +2,7 @@
 
 from src.gui import Terminal
 from src.shell import Shell
-from src.config import parse_args, run_script, script_lines
+from src.config import parse_args, run_script, script_lines, validate_paths
 from src.event_log import EventLog
 from src.vfs import VFS
 import sys
@@ -14,6 +14,7 @@ def main():
     args = parse_args()
     print(f"vfs={args.vfs!r}, log={args.log!r}, script={args.script!r}")
     try:
+        validate_paths(args)
         lines = script_lines(args.script)
         vfs = VFS(args.vfs)
         shell = Shell(EventLog(args.log), vfs)
