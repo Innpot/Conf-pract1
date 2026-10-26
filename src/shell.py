@@ -2,6 +2,7 @@
 
 import shlex
 from src.vfs import VFS
+from src.commands import COMMANDS
 
 
 class Shell:
@@ -35,7 +36,7 @@ class Shell:
             return f"Error: {error}"
 
     def dispatch(self, command, args):
-        """Execute prototype commands."""
-        if command in {"ls", "cd"}:
-            return f"{command}: {args!r}"
-        raise ValueError(f"unknown command: {command}")
+        """Dispatch a supported command to its implementation."""
+        if command not in COMMANDS:
+            raise ValueError(f"unknown command: {command}")
+        return COMMANDS[command](self, args)
