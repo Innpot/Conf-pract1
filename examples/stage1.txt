@@ -1,0 +1,7 @@
+ls
+ls "a b" 'c d'
+cd /
+unknown
+ls "unterminated
+exit extra
+exit
