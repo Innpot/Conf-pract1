@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vfs name="Variant 20">
+  <file name="motd">Welcome! Commands: ls cd clear date cal chmod mv exit</file>
+  <file name=".hidden">Hidden file</file>
+  <dir name="home">
+    <dir name="student">
+      <dir name="docs">
+        <file name="notes.txt">Study notes</file>
+        <file name="with spaces.txt">Quoted path example</file>
+      </dir>
+      <dir name="empty" />
+    </dir>
+  </dir>
+  <dir name="tmp" />
+</vfs>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vfs name="Files">
+  <file name="motd">Welcome to the Files VFS!</file>
+  <file name="hello.txt">Hello, world!</file>
+  <file name="binary.bin" encoding="base64">AAEC/w==</file>
+</vfs>
