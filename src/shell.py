@@ -6,16 +6,19 @@ import shlex
 class Shell:
     """Maintain an interactive shell session."""
 
-    def __init__(self):
+    def __init__(self, logger=None):
         """Create an active session."""
         self.running = True
         self.cwd = "/"
         self.clear_requested = False
+        self.logger = logger
 
     def execute(self, line):
         """Parse one command, reporting invalid syntax as text."""
         self.clear_requested = False
         try:
+            if line.strip() and self.logger:
+                self.logger.record(line)
             words = shlex.split(line)
             if not words:
                 return ""
