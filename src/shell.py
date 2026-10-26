@@ -1,17 +1,19 @@
 """Command parsing and execution independent of the GUI."""
 
 import shlex
+from src.vfs import VFS
 
 
 class Shell:
     """Maintain an interactive shell session."""
 
-    def __init__(self, logger=None):
+    def __init__(self, logger=None, vfs=None):
         """Create an active session."""
         self.running = True
         self.cwd = "/"
         self.clear_requested = False
         self.logger = logger
+        self.vfs = vfs if vfs is not None else VFS()
 
     def execute(self, line):
         """Parse one command, reporting invalid syntax as text."""
